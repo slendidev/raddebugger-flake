@@ -32,6 +32,14 @@
 							freetype xorg.libX11 xorg.libXext libGL
 						];
 
+						makeWrapperArgs = [
+							"--prefix PATH: ${
+								lib.makeBinPath [
+									pkgs.llvm
+								]
+							}"
+						];
+
 						NIX_CFLAGS_COMPILE = "-I${pkgs.freetype.dev}/include/freetype2";
 
 						postPatch = ''
