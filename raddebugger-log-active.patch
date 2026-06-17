@@ -1,0 +1,19 @@
+diff --git a/src/base/base_log.c b/src/base/base_log.c
+index 5adf5a8..f42427d 100644
+--- a/src/base/base_log.c
++++ b/src/base/base_log.c
+@@ -4,10 +4,11 @@
+ ////////////////////////////////
+ //~ rjf: Globals/Thread-Locals
+ 
+-C_LINKAGE thread_static Log *log_active;
+-#if !BUILD_SUPPLEMENTARY_UNIT
+-C_LINKAGE thread_static Log *log_active = 0;
+-#endif
++#if BUILD_SUPPLEMENTARY_UNIT
++C_LINKAGE thread_static Log *log_active;
++#else
++C_LINKAGE thread_static Log *log_active = 0;
++#endif
+ 
+ String8 g_logs_folder;

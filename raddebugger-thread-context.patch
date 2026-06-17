@@ -1,0 +1,20 @@
+diff --git a/src/base/base_thread_context.c b/src/base/base_thread_context.c
+index 4216361..07773a1 100644
+--- a/src/base/base_thread_context.c
++++ b/src/base/base_thread_context.c
+@@ -4,10 +4,11 @@
+ ////////////////////////////////
+ //~ rjf: Globals
+ 
+-C_LINKAGE thread_static TCTX *tctx_thread_local;
+-#if !BUILD_SUPPLEMENTARY_UNIT
+-C_LINKAGE thread_static TCTX *tctx_thread_local = 0;
+-#endif
++#if BUILD_SUPPLEMENTARY_UNIT
++C_LINKAGE thread_static TCTX *tctx_thread_local;
++#else
++C_LINKAGE thread_static TCTX *tctx_thread_local = 0;
++#endif
+ 
+ ////////////////////////////////
+ //~ rjf: Thread Context Functions

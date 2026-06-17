@@ -19,28 +19,32 @@
 				packages = rec {
 					raddebugger = pkgs.stdenv.mkDerivation {
 						pname = "raddebugger";
-						version = "unstable";
-						src = raddebuggerSrc;
+						version = "v0.9.27-alpha";
+						src = pkgs.fetchFromGitHub {
+							owner = "EpicGames";
+							repo = "raddebugger";
+							rev = "v0.9.27-alpha";
+							hash = "sha256-qJVRnoETV3aZzvlsOIBbiIWNMJutxzVxz7X8jylLki0=";
+						};
 
 						strictDeps = true;
 
 						nativeBuildInputs = with pkgs; [
-							bash coreutils gnugrep gnused clang
+							bash coreutils gnugrep gnused clang makeWrapper
 						];
 
 						buildInputs = with pkgs; [
-							freetype xorg.libX11 xorg.libXext libGL
-						];
-
-						makeWrapperArgs = [
-							"--prefix PATH: ${
-								lib.makeBinPath [
-									pkgs.llvm
-								]
-							}"
+							freetype libx11 libxext libGL llvm
 						];
 
 						NIX_CFLAGS_COMPILE = "-I${pkgs.freetype.dev}/include/freetype2";
+
+						patches = [
+							./raddebugger-thread-context.patch
+							./raddebugger-log-active.patch
+							./raddebugger-crash-symbolizer.patch
+						];
+						patchFlags = [ "-p1" "--binary" ];
 
 						postPatch = ''
 							substituteInPlace build.sh \
@@ -61,10 +65,11 @@
 							runHook preInstall
 							mkdir -p "$out/bin"
 							install -Dm755 build/raddbg "$out/bin/raddbg"
+							wrapProgram "$out/bin/raddbg" \
+								--prefix PATH : ${lib.makeBinPath [ pkgs.llvm ]} \
+								--set ASAN_SYMBOLIZER_PATH "${pkgs.llvm}/bin/llvm-symbolizer"
 							runHook postInstall
 						'';
-
-						patches = [ ./fix-black-screen.patch ];
 
 						meta = with lib; {
 							description = "RAD Debugger";

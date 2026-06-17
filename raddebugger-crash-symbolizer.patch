@@ -1,0 +1,28 @@
+diff --git a/src/linux/base/linux_base.c b/src/linux/base/linux_base.c
+index d967513..9590ce0 100644
+--- a/src/linux/base/linux_base.c
++++ b/src/linux/base/linux_base.c
+@@ -1408,13 +1408,14 @@ lnx_signal_handler(int sig, siginfo_t *info, void *arg)
+   fprintf(stderr, "A fatal signal was received: %s (%d). The process is terminating.\n", strsignal(sig), sig);
+   fprintf(stderr, "Create a new issue with this report at %s.\n\n", BUILD_ISSUES_LINK_STRING_LITERAL);
+   fprintf(stderr, "Callstack:\n");
++  ProcessInfo *proc_info = get_process_info();
+   for EachIndex(i, ips_count)
+   {
+     Dl_info info = {0};
+     dladdr(ips[i], &info);
+     
+     char cmd[2048];
+-    snprintf(cmd, sizeof(cmd), "llvm-symbolizer --relative-address -f -e %s %lu", info.dli_fname, (unsigned long)ips[i] - (unsigned long)info.dli_fbase);
++    snprintf(cmd, sizeof(cmd), "llvm-symbolizer --relative-address -f -e %.*s %lu", (int)proc_info->binary_file_path.size, proc_info->binary_file_path.str, (unsigned long)ips[i] - (unsigned long)info.dli_fbase);
+     FILE *f = popen(cmd, "r");
+     if(f)
+     {
+@@ -1423,7 +1424,7 @@ lnx_signal_handler(int sig, siginfo_t *info, void *arg)
+       {
+         String8 func = str8_cstring(func_name);
+         if(func.size > 0) func.size -= 1;
+-        String8 module = str8_skip_last_slash(str8_cstring(info.dli_fname));
++        String8 module = str8_skip_last_slash(proc_info->binary_file_path);
+         String8 file   = str8_skip_last_slash(str8_cstring_capped(file_name, file_name + sizeof(file_name)));
+         if(file.size > 0) file.size -= 1;

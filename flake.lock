@@ -20,12 +20,12 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1762596750,
-        "narHash": "sha256-rXXuz51Bq7DHBlfIjN7jO8Bu3du5TV+3DSADBX7/9YQ=",
-        "rev": "b6a8526db03f735b89dd5ff348f53f752e7ddc8e",
-        "revCount": 891611,
+        "lastModified": 1781577229,
+        "narHash": "sha256-lrp67w8AulE9Ks53n27I45ADSzbOCn4H+CNW1Ck8B+8=",
+        "rev": "567a49d1913ce81ac6e9582e3553dd90a955875f",
+        "revCount": 1017464,
         "type": "tarball",
-        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.1.891611%2Brev-b6a8526db03f735b89dd5ff348f53f752e7ddc8e/019a684c-ea63-75fd-99cc-3b869954e5f9/source.tar.gz?rev=b6a8526db03f735b89dd5ff348f53f752e7ddc8e&revCount=891611"
+        "url": "https://api.flakehub.com/f/pinned/NixOS/nixpkgs/0.1.1017464%2Brev-567a49d1913ce81ac6e9582e3553dd90a955875f/019ed27e-44b2-7462-b1ef-3564aa6c28ee/source.tar.gz?rev=567a49d1913ce81ac6e9582e3553dd90a955875f&revCount=1017464"
       },
       "original": {
         "type": "tarball",
@@ -35,11 +35,11 @@
     "raddebuggerSrc": {
       "flake": false,
       "locked": {
-        "lastModified": 1762563210,
-        "narHash": "sha256-BRP2w4whzKmG45fHSrFCCx9hhkSA7yPLqvhc8FG2tj0=",
+        "lastModified": 1781493652,
+        "narHash": "sha256-1clncdTkNbA/HxAw01gT99svKWckRfnMu8kFzO+pOYk=",
         "owner": "EpicGamesExt",
         "repo": "raddebugger",
-        "rev": "efb4731acec006c4dbfb6d95fbb32d673d21cb04",
+        "rev": "eb87cb053ea09bb5a9e919dd53272127558c2d63",
         "type": "github"
       },
       "original": {
